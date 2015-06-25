@@ -13,8 +13,8 @@ set :backend, :ssh
 currentDir=Dir.pwd
 
 RSpec.configure do |c|
-  c.output_stream = File.open("#{currentDir}/htmlReport/serverspec.xml", 'w')
-  c.formatter = 'JUnit'
+  c.output_stream = File.open("#{currentDir}/htmlReport/serverspec.html", 'w')
+  c.formatter = 'html'
 end
 
 set :sudo_password, ENV['checklist_sudo_pass']

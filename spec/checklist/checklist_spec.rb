@@ -8,8 +8,8 @@ currentDir=Dir.pwd
 
 puts 'Checking if logfile, properties file, alfresco MMT and alfresco wars exist'
 %w(checklist_target_alf_glob
-   checklist_target_catalina_log
-   checklist_target_alfresco_mmt
+checklist_target_catalina_log
+checklist_target_alfresco_mmt
 checklist_target_alfresco_wars).each do |property|
   if !file(ENV[property]).exists?
     puts "Please check your env variable > #{property}, the file or path does not exist!!!"

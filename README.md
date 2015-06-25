@@ -26,6 +26,7 @@ export checklist_target_alf_glob=/opt/alf-installation/tomcat/shared/classes/alf
 export checklist_target_catalina_log=/opt/alf-installation/tomcat/logs/catalina.out
 export checklist_target_alfresco_mmt=/opt/alf-installation/bin/alfresco-mmt.jar
 export checklist_target_alfresco_wars=/opt/alf-installation/tomcat/webapps/
+
 ```
 
 - Run 
