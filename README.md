@@ -6,11 +6,11 @@ alfresco-syschecklist : Serverspec tests to validate alfresco installations
 Setup your test target machine in the test.properties file
 along with the other properties as required
 
-
 USAGE
 -----
 
 Set the following env variables:
+
 checklist_target_password
 checklist_target_host
 checklist_target_sudo_pass 
