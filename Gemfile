@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-ruby "2.1.4"
 
 gem 'rspec-expectations', '~> 3.2.0'
 gem 'serverspec', '~> 2.17.0'
