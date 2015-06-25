@@ -31,7 +31,7 @@ export checklist_target_alfresco_wars=/opt/alf-installation/tomcat/webapps/
 
 - Run 
 ```
-bundle update
+bundle install
 bundle exec rake
 ```
 
