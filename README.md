@@ -10,6 +10,12 @@ along with the other properties as required
 USAGE
 -----
 
+- Checkout
+```
+git clone git@github.com:AlfrescoTestAutomation/alfresco-checklist.git
+cd alfresco-checklist
+```
+
 - Set env variables
 ```
 export checklist_target_password=<ssh_pwd>
