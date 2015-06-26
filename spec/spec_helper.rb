@@ -13,7 +13,7 @@ set :backend, :ssh
 currentDir=Dir.pwd
 
 RSpec.configure do |c|
-  c.output_stream = File.open("#{currentDir}/htmlReport/serverspec.html", 'w')
+  c.output_stream = File.open("#{currentDir}/serverspec.html", 'w')
   c.formatter = 'html'
 end
 
