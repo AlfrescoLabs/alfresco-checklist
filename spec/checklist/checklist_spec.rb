@@ -1,28 +1,37 @@
 require 'spec_helper'
-
-require_relative '../../spec/helpers'
-
-include Helpers
+require 'helpers'
 
 currentDir=Dir.pwd
 
+runProperties = {}
+File.open("test.properties", 'r').each_line do |line|
+  runProperties[$1.strip] = $2 if line =~ /([^=]*)=(.*)\/\/(.*)/ || line =~/([^=]*)=(.*)/
+end
+output = "File Name test.properties \n"
+runProperties.each { |key, value| output += " #{key}= #{value} \n" }
+
 puts 'Checking if logfile, properties file, alfresco MMT and alfresco wars exist'
 %w(checklist_target_alf_glob
-checklist_target_catalina_log
-checklist_target_alfresco_mmt
-checklist_target_alfresco_wars).each do |property|
-  if !file(ENV[property]).exists?
-    puts "Please check your env variable > #{property}, the file or path does not exist!!!"
+   checklist_target_alfresco_log
+   checklist_target_alfresco_mmt
+   checklist_target_alfresco_war
+   checklist_target_share_war
+   ).each do |property|
+  if !file(runProperties["#{property}"]).exists?
+    puts "Please check your option > #{property}, the file or path does not exist!!!"
     exit!
   end
 end
 
-target_host = ENV['checklist_target_host']
-logfile = file(ENV['checklist_target_catalina_log']).content
-String globalPropertiesFile = file(ENV['checklist_target_alf_glob']).content
+include Helpers
+
+target_host = runProperties['checklist_target_host']
+logfile = file(runProperties['checklist_target_alfresco_log']).content
+globalPropertiesFile = file(runProperties['checklist_target_alf_glob']).content
 glProps = parsePropertiesFile globalPropertiesFile
-alfrescoMMT = ENV['checklist_target_alfresco_mmt']
-alfrescoWars = ENV['checklist_target_alfresco_wars']
+alfrescoMMT = runProperties['checklist_target_alfresco_mmt']
+alfrescoWar = runProperties['checklist_target_alfresco_war']
+shareWar = runProperties['checklist_target_share_war']
 
 describe 'Alfresco Global Checks:' do
   let(:serverConnection) { $serverConnection ||= getFaradayConnection "http://#{target_host}:8080" }
@@ -439,11 +448,11 @@ describe 'Google docs:' do
   end
 
   it 'should be installed in alfresco war' do
-    expect(command("java -jar #{alfrescoMMT} list #{alfrescoWars}alfresco.war").stdout).to include('Module \'org.alfresco.integrations.google.docs\' installed')
+    expect(command("java -jar #{alfrescoMMT} list #{alfrescoWar}").stdout).to include('Module \'org.alfresco.integrations.google.docs\' installed')
   end
 
   it 'should be installed in share war' do
-    expect(command("java -jar #{alfrescoMMT} list #{alfrescoWars}share.war").stdout).to include('Module \'org.alfresco.integrations.share.google.docs\' installed')
+    expect(command("java -jar #{alfrescoMMT} list #{shareWar}").stdout).to include('Module \'org.alfresco.integrations.share.google.docs\' installed')
   end
 
 end
@@ -490,11 +499,11 @@ describe 'WCMQS :' do
   end
 
   it 'should be installed in alfresco war' do
-    expect(command("java -jar #{alfrescoMMT} list #{alfrescoWars}alfresco.war").stdout).to include('Module \'org_alfresco_module_wcmquickstart\' installed')
+    expect(command("java -jar #{alfrescoMMT} list #{alfrescoWar}").stdout).to include('Module \'org_alfresco_module_wcmquickstart\' installed')
   end
 
   it 'should be installed in share war' do
-    expect(command("java -jar #{alfrescoMMT} list #{alfrescoWars}share.war").stdout).to include('Module \'org_alfresco_module_wcmquickstartshare\' installed')
+    expect(command("java -jar #{alfrescoMMT} list #{shareWar}").stdout).to include('Module \'org_alfresco_module_wcmquickstartshare\' installed')
   end
 
 end
