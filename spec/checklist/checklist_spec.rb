@@ -32,13 +32,15 @@ glProps = parsePropertiesFile globalPropertiesFile
 alfrescoMMT = runProperties['checklist_target_alfresco_mmt']
 alfrescoWar = runProperties['checklist_target_alfresco_war']
 shareWar = runProperties['checklist_target_share_war']
+shareport = runProperties['share_port']
+alfrescoport = runProperties['alfresco_port']
 
 describe 'Alfresco Global Checks:' do
-  let(:serverConnection) { $serverConnection ||= getFaradayConnection "http://#{target_host}:8080" }
-  let(:authenticatedServerConnection) { authenticatedServerConnection ||= getFaradayConnection "http://admin:admin@#{target_host}:8080" }
+  let(:serverConnection) { $serverConnection ||= getFaradayConnection "http://#{target_host}:#{alfrescoport}" }
+  let(:authenticatedServerConnection) { authenticatedServerConnection ||= getFaradayConnection "http://admin:admin@#{target_host}:#{alfrescoport}" }
 
   it 'When we check the status of alfresco port it' do
-    expect(port(8080)).to be_listening
+    expect(port(alfrescoport)).to be_listening
   end
 
   it 'When we check the status of Database port it' do
@@ -273,7 +275,7 @@ describe 'IMAP/IMAPS:' do
 
   it 'when verifying the admin console, IMAP should be enabled' do
 
-    let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:8080" }
+    let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:#{alfrescoport}" }
     let(:html) { $html ||= Nokogiri::HTML(authenticatedServerConnection.get('/alfresco/s/enterprise/admin/admin-imap').body) }
 
     expect(html.xpath('.//span[text()="Enable IMAP:"]/..//input[@checked="checked"]')[0]).not_to be_nil
@@ -291,7 +293,7 @@ end
 
 
 describe 'Transformation Services:' do
-  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:8080" }
+  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:#{alfrescoport}" }
   let(:transformation) { transformation ||= Nokogiri::HTML(authenticatedServerConnection.get('/alfresco/s/enterprise/admin/admin-transformations').body) }
 
   it 'when verifying the log file' do
@@ -301,7 +303,7 @@ end
 
 
 describe 'Image Magic:' do
-  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:8080" }
+  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:#{alfrescoport}" }
   let(:transformation) { transformation ||= Nokogiri::HTML(authenticatedServerConnection.get('/alfresco/s/enterprise/admin/admin-transformations').body) }
 
   it { expect(glProps).not_to include('img.root' => '') }
@@ -315,7 +317,7 @@ describe 'Image Magic:' do
 end
 
 describe 'office transformation tools:' do
-  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:8080" }
+  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:#{alfrescoport}" }
   let(:transformation) { transformation ||= Nokogiri::HTML(authenticatedServerConnection.get('/alfresco/s/enterprise/admin/admin-transformations').body) }
 
   it 'jod converter and office should not be enabled or disabled at the same time' do
@@ -360,7 +362,7 @@ describe 'office transformation tools:' do
 end
 
 describe 'swftools:' do
-  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:8080" }
+  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:#{alfrescoport}" }
   let(:transformation) { transformation ||= Nokogiri::HTML(authenticatedServerConnection.get('/alfresco/s/enterprise/admin/admin-transformations').body) }
 
   it 'when verifying the alfresco global properties file' do
@@ -409,7 +411,7 @@ describe 'Alfresco License:' do
     expect(logfile).to include('[service.descriptor.DescriptorService] [localhost-startStop-1] Alfresco license: Mode ENTERPRISE')
   end
 
-  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:8080" }
+  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:#{alfrescoport}" }
   let(:license) { license ||= Nokogiri::HTML(authenticatedServerConnection.get('/alfresco/s/enterprise/admin/admin-license').body) }
 
   it 'Max Users should be unlimited on admin console' do
@@ -440,7 +442,7 @@ describe 'Google docs:' do
     expect(logfile).to include('[localhost-startStop-1] Startup of \'googledocs\' subsystem, ID: [googledocs, drive] complete')
   end
 
-  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:8080" }
+  let(:authenticatedServerConnection) { getFaradayConnection "http://admin:admin@#{target_host}:#{alfrescoport}" }
   let(:google) { google ||= Nokogiri::HTML(authenticatedServerConnection.get('/alfresco/s/enterprise/admin/admin-googledocs').body) }
 
   it 'Google Docs should be enabled on admin console' do

@@ -45,9 +45,9 @@ Options:
   -r, [--shrwar=SHRWAR]      # target machine share war  
 
 #example:  
-# thor checklist:execute -h 172.29.101.192 -u root -p alfresco -s alfresco -g /opt/alf-installation/tomcat/shared/classes/alfresco-global.properties -l /opt/alf-installation/tomcat/logs/catalina.out -m /opt/alf-installation/bin/alfresco-mmt.jar -f /opt/alf-installation/tomcat/webapps/alfresco.war -r /opt/alf-installation/tomcat/webapps/share.war  
+# thor checklist:execute -h 172.29.101.192 -u root -p alfresco -s alfresco -g /opt/alf-installation/tomcat/shared/classes/alfresco-global.properties -l /opt/alf-installation/tomcat/logs/catalina.out -m /opt/alf-installation/bin/alfresco-mmt.jar -f /opt/alf-installation/tomcat/webapps/alfresco.war -r /opt/alf-installation/tomcat/webapps/share.war --alfport 8080 --shrport 8080
 
-# thor checklist:execute -h 127.0.0.1 -o 2222 -u vagrant -p vagrant -s vagrant -g /usr/share/tomcat/shared/classes/alfresco-global.properties -l /usr/share/tomcat-alfresco/logs/alfresco.log -m /usr/share/tomcat/bin/alfresco-mmt.jar -f /usr/share/tomcat-alfresco/webapps/alfresco.war -r /usr/share/tomcat-share/webapps/share.war  
+# thor checklist:execute -h 127.0.0.1 -o 2222 -u vagrant -p vagrant -s vagrant -g /usr/share/tomcat/shared/classes/alfresco-global.properties -l /usr/share/tomcat-alfresco/logs/alfresco.log -m /usr/share/tomcat/bin/alfresco-mmt.jar -f /usr/share/tomcat-alfresco/webapps/alfresco.war -r /usr/share/tomcat-share/webapps/share.war --alfport 9000 --shrport 9000
  ```
 
 - Collect results
